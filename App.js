@@ -4,12 +4,10 @@ import { addDoc, collection, firestore, MESSAGES, serverTimestamp, query, onSnap
 import React, { useEffect, useState } from 'react'
 import { convertFirestoreTimestampToJS } from './helper/Functions'
 import { or } from 'firebase/firestore'
-
-
+import FetchMessages from './components/FetchMessages'
 
 export default function App() {
   const [newMessage, setNewMessage] = useState('')
-  const [messages, setMessages] = useState([])
 
   const save = async () => {
     const docref = await addDoc(collection(firestore, MESSAGES), {
@@ -18,21 +16,6 @@ export default function App() {
     }).catch(error => console.error('Error adding document: ', error))
     setNewMessage('')
   }
-
-  useEffect(() => {
-    const q = query(collection(firestore, MESSAGES),orderBy('created', 'desc'))
-    const unsubscribe = onSnapshot(q, (querySnapshot) => {
-      const tempMessages = []
-      querySnapshot.forEach((doc) => {
-        console.log(doc.id)
-        tempMessages.push({ ...doc.data(), id: doc.id, created: convertFirestoreTimestampToJS(doc.data().created) })
-      })
-      setMessages(tempMessages)
-    })
-    return () => {
-      unsubscribe()
-    }
-  }, [])
 
   return (
     <SafeAreaView style={styles.container}>
@@ -48,14 +31,7 @@ export default function App() {
         />
         <Button title='Save' onPress={() => save()} />
       </View>
-      <ScrollView>
-        {messages.map((message) => (
-          <View key={message.id} style={styles.message}>
-            <Text style={styles.date}>{message.created}</Text>
-            <Text>{message.text}</Text>
-          </View>
-        ))}
-      </ScrollView>
+      <FetchMessages />
     </SafeAreaView>
   )
 }
@@ -98,3 +74,14 @@ const styles = StyleSheet.create({
     fontSize: 10,
   }
 })
+
+/*
+      <ScrollView>
+        {messages.map((message) => (
+          <View key={message.id} style={styles.message}>
+            <Text style={styles.date}>{message.created}</Text>
+            <Text>{message.text}</Text>
+          </View>
+        ))}
+      </ScrollView>
+*/

@@ -2,7 +2,7 @@ import { initializeApp } from 'firebase/app'
 import { getFirestore, collection, addDoc, serverTimestamp, query, onSnapshot, orderBy } from 'firebase/firestore'
 
 const firebaseConfig = {
-    apiKey: "AIzaSyAJlErrfM3ycm4pP2OYqO-gMMTR391apVE",
+    apiKey: "",
     authDomain: "chatdemo-6eaa7.firebaseapp.com",
     projectId: "chatdemo-6eaa7",
     storageBucket: "chatdemo-6eaa7.appspot.com",
