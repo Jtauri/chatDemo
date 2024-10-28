@@ -3,6 +3,7 @@ import { ScrollView, Text, View, StyleSheet } from 'react-native'
 import { collection, query, onSnapshot, orderBy } from 'firebase/firestore'
 import { firestore, MESSAGES } from '../firebase/config'
 import { convertFirestoreTimestampToJS } from '../helper/Functions'
+import styles from '../styles/Styles'
 
 
 
@@ -38,15 +39,3 @@ export default function FetchMessages() {
     )
 }
 
-const styles = StyleSheet.create({
-    message: {
-        padding: 10,
-        margin: 5,
-        backgroundColor: '#f9f9f9',
-        borderRadius: 10,
-    },
-    date: {
-        color: '#666',
-        fontSize: 12,
-    },
-})
